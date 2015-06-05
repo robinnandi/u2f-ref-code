@@ -31,6 +31,7 @@ import com.google.u2f.server.impl.MemoryDataStore;
 import com.google.u2f.server.impl.U2FServerReferenceImpl;
 import com.google.u2f.tools.httpserver.servlets.EnrollDataServlet;
 import com.google.u2f.tools.httpserver.servlets.EnrollFinishServlet;
+import com.google.u2f.tools.httpserver.servlets.LoginServlet;
 import com.google.u2f.tools.httpserver.servlets.RequestDispatcher;
 import com.google.u2f.tools.httpserver.servlets.SignDataServlet;
 import com.google.u2f.tools.httpserver.servlets.SignFinishServlet;
@@ -100,6 +101,8 @@ public class U2fHttpServer {
         new BouncyCastleCrypto(), ImmutableSet.of("http://localhost:8080"));
     Container dispatchContainer = new RequestDispatcher()
         .registerContainer("/", new StaticHandler("text/html","html/index.html"))
+        .registerContainer("/login.js", new LoginServlet(u2fServer))
+        .registerContainer("/u2f", new StaticHandler("text/html","html/u2f.html"))
         .registerContainer("/enroll", new StaticHandler("text/html","html/enroll.html"))
         .registerContainer("/enrollData.js", new EnrollDataServlet(u2fServer))
         .registerContainer("/enrollFinish", new EnrollFinishServlet(u2fServer))
