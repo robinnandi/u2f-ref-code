@@ -16,6 +16,9 @@ import com.google.u2f.server.messages.SignRequest;
 import com.google.u2f.server.messages.SignResponse;
 
 public interface U2FServer {
+	
+	// verify credentials //
+	public boolean verifyCredentials(String username, String password) throws U2FException;
 
   // registration //
   public RegistrationRequest getRegistrationRequest(String accountName, String appId) throws U2FException;

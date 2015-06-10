@@ -26,6 +26,7 @@ import com.google.gson.JsonParser;
 import com.google.u2f.U2FConsts;
 import com.google.u2f.U2FException;
 import com.google.u2f.codec.RawMessageCodec;
+import com.google.u2f.db.DbConnectionManager;
 import com.google.u2f.key.UserPresenceVerifier;
 import com.google.u2f.key.messages.AuthenticateResponse;
 import com.google.u2f.key.messages.RegisterResponse;
@@ -341,4 +342,16 @@ public class U2FServerReferenceImpl implements U2FServer {
     }
     return uri.getScheme() + "://" + uri.getAuthority();
   }
+
+	@Override
+	public boolean verifyCredentials(String username, String password) throws U2FException {
+		DbConnectionManager dbConMan = new DbConnectionManager();
+	    dbConMan.setQuery("select password from user where username = '" + username + "';");
+	    dbConMan.executeQuery();
+	    String pwdhash = dbConMan.returnSingleResult();
+	    if (pwdhash.equals(password)) {
+	    	return true;
+	    }
+		return false;
+	}
 }

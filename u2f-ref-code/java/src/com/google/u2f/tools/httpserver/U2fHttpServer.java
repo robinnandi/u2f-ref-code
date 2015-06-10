@@ -102,7 +102,6 @@ public class U2fHttpServer {
     Container dispatchContainer = new RequestDispatcher()
         .registerContainer("/", new StaticHandler("text/html","html/index.html"))
         .registerContainer("/login", new LoginServlet(u2fServer))
-        .registerContainer("/u2f", new StaticHandler("text/html","html/u2f.html"))
         .registerContainer("/enroll", new StaticHandler("text/html","html/enroll.html"))
         .registerContainer("/enrollData.js", new EnrollDataServlet(u2fServer))
         .registerContainer("/enrollFinish", new EnrollFinishServlet(u2fServer))
