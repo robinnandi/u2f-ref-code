@@ -28,7 +28,7 @@ public class LoginServlet extends HtmlServlet {
     dbConMan.executeQuery();
     String pwdhash = dbConMan.returnSingleResult();
     body.println("Database password is: " + pwdhash);
-    if (pwdhash == req.getParameter("password")) {
+    if (pwdhash.equals(req.getParameter("password"))) {
     	// redirect to u2f page for second factor authentication
     	body.println("Success!");
     } else {
